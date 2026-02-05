@@ -120,3 +120,4 @@ document.querySelectorAll("textarea").forEach((t, i) => {
   if (saved[i]) t.value = saved[i];
 });
 updateShoppingList();
+//
