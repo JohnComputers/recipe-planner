@@ -1,1 +1,59 @@
-.
+body {
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  background: #2ecc71;
+  color: white;
+  padding: 20px;
+}
+
+#pricing {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.premium {
+  border: 2px solid gold;
+}
+
+.buy {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px;
+  background: #2ecc71;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.planner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+
+textarea {
+  height: 80px;
+}
+
