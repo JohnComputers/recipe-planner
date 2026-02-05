@@ -1,61 +1,46 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  text-align: center;
-  margin: 0;
+font-family: Arial, sans-serif;
+background: #0f172a;
+color: #e5e7eb;
+margin: 0;
 }
+
 
 header {
-  background: #2ecc71;
-  color: white;
-  padding: 20px;
+background: #020617;
+padding: 1rem;
 }
 
-#pricing {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+
+nav button {
+margin-right: 0.5rem;
 }
 
-.card {
-  background: white;
-  padding: 20px;
-  width: 220px;
-  border-radius: 8px;
+
+.page {
+padding: 1.5rem;
 }
 
-.premium {
-  border: 2px solid gold;
-}
-
-.buy {
-  display: block;
-  margin-top: 10px;
-  padding: 10px;
-  background: #27ae60;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
 
 .hidden {
-  display: none;
+display: none;
 }
 
-.planner {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  max-width: 600px;
-  margin: auto;
+
+input {
+display: block;
+margin: 0.5rem 0;
+padding: 0.5rem;
 }
 
-textarea {
-  height: 70px;
+
+button {
+padding: 0.5rem 1rem;
+margin-top: 0.5rem;
 }
 
-.upgrade {
-  color: red;
-  font-weight: bold;
+
+.bypass {
+background: red;
+color: white;
 }
