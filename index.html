@@ -1,1 +1,56 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meal Planner Pro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>🍽 Meal Planner Pro</h1>
+  <p>Plan meals. Save money. Eat better.</p>
+</header>
+
+<section id="pricing">
+  <h2>Unlock Recipe Packs</h2>
+
+  <div class="card">
+    <h3>Basic Pack</h3>
+    <p>50 Recipes + 1-Week Planner</p>
+    <a href="PASTE_SQUARE_BASIC_LINK" class="buy">Buy $4.99</a>
+  </div>
+
+  <div class="card">
+    <h3>Standard Pack</h3>
+    <p>150 Recipes + 2-Week Planner + Shopping Lists</p>
+    <a href="PASTE_SQUARE_STANDARD_LINK" class="buy">Buy $9.99</a>
+  </div>
+
+  <div class="card premium">
+    <h3>Premium Pack</h3>
+    <p>300+ Recipes + 4-Week Planner + PDF Export</p>
+    <a href="PASTE_SQUARE_PREMIUM_LINK" class="buy">Buy $19.99</a>
+  </div>
+</section>
+
+<section id="app" class="hidden">
+  <h2>📋 Meal Planner</h2>
+
+  <div class="planner">
+    <textarea placeholder="Monday"></textarea>
+    <textarea placeholder="Tuesday"></textarea>
+    <textarea placeholder="Wednesday"></textarea>
+    <textarea placeholder="Thursday"></textarea>
+    <textarea placeholder="Friday"></textarea>
+    <textarea placeholder="Saturday"></textarea>
+    <textarea placeholder="Sunday"></textarea>
+  </div>
+
+  <button onclick="savePlan()">Save Meal Plan</button>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
+
