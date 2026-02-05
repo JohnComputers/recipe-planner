@@ -1,123 +1,75 @@
-/* ---------- LICENSE + RECEIPT ---------- */
-const params = new URLSearchParams(window.location.search);
+let unlocked = false;
 
-if (params.get("license")) {
-  localStorage.setItem("license", params.get("license"));
-  localStorage.setItem("receipt", JSON.stringify({
-    license: params.get("license"),
-    date: new Date().toLocaleString(),
-    site: "Meal Planner Pro"
-  }));
-  window.history.replaceState({}, document.title, "/recipe-planner/");
+
+function showPage(id) {
+if (!unlocked && id !== 'login') {
+alert('Please purchase or use admin bypass');
+return;
+}
+document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
 }
 
-const license = localStorage.getItem("license");
 
-const ranks = { basic: 1, standard: 2, premium: 3 };
-const has = lvl => ranks[license] >= ranks[lvl];
-
-/* ---------- SHOW APP ---------- */
-if (license) {
-  document.getElementById("app").classList.remove("hidden");
+function createAccount() {
+const user = username.value;
+const pass = password.value;
+localStorage.setItem('account', JSON.stringify({ user, pass }));
+alert('Account created');
 }
 
-/* ---------- RECIPE PACKS ---------- */
-const recipePacks = {
-  basic: {
-    "Pancakes": ["flour", "eggs", "milk"],
-    "Omelette": ["eggs", "cheese", "butter"]
-  },
-  standard: {
-    "Spaghetti": ["pasta", "tomato sauce", "garlic"],
-    "Chicken Salad": ["chicken", "lettuce", "olive oil"]
-  },
-  premium: {
-    "Steak Dinner": ["steak", "potatoes", "butter"],
-    "Salmon Bowl": ["salmon", "rice", "avocado"]
-  }
+
+function login() {
+const acc = JSON.parse(localStorage.getItem('account'));
+if (!acc) return alert('No account');
+if (acc.user === username.value && acc.pass === password.value) {
+unlocked = true;
+showPage('dashboard');
+} else alert('Wrong credentials');
+}
+
+
+function bypassPaywall() {
+unlocked = true;
+showPage('dashboard');
+}
+
+
+function saveGoals() {
+const goals = {
+calories: goalCalories.value,
+protein: goalProtein.value,
+carbs: goalCarbs.value,
+sugar: goalSugar.value
 };
-
-/* ---------- LOAD RECIPES ---------- */
-const recipeSelect = document.getElementById("recipeSelect");
-
-function loadRecipes() {
-  recipeSelect.innerHTML = "";
-  Object.entries(recipePacks).forEach(([lvl, pack]) => {
-    if (has(lvl)) {
-      Object.keys(pack).forEach(r => {
-        const opt = document.createElement("option");
-        opt.value = r;
-        opt.textContent = r;
-        recipeSelect.appendChild(opt);
-      });
-    }
-  });
-
-  if (!has("standard")) {
-    document.getElementById("upgradePrompt").textContent =
-      "Upgrade to Standard to unlock more recipes & shopping lists.";
-  }
+localStorage.setItem('goals', JSON.stringify(goals));
+alert('Goals saved');
 }
 
-loadRecipes();
 
-/* ---------- MEAL PLANNER ---------- */
-function addRecipe() {
-  const r = recipeSelect.value;
-  const slots = document.querySelectorAll("textarea");
-  for (let s of slots) {
-    if (!s.value) {
-      s.value = r;
-      updateShoppingList();
-      return;
-    }
-  }
+function addMeal() {
+const meal = {
+calories: calories.value,
+protein: protein.value,
+carbs: carbs.value,
+sugar: sugar.value
+};
+const meals = JSON.parse(localStorage.getItem('meals') || '[]');
+meals.push(meal);
+localStorage.setItem('meals', JSON.stringify(meals));
+renderMeals();
 }
 
-function savePlan() {
-  const meals = [...document.querySelectorAll("textarea")].map(t => t.value);
-  localStorage.setItem("mealPlan", JSON.stringify(meals));
-  updateShoppingList();
-  alert("Saved!");
-}
 
-/* ---------- SHOPPING LIST ---------- */
-function updateShoppingList() {
-  const ul = document.getElementById("shoppingList");
-  ul.innerHTML = "";
-
-  if (!has("standard")) {
-    ul.innerHTML = "<li>Upgrade to Standard to unlock shopping lists</li>";
-    return;
-  }
-
-  const meals = JSON.parse(localStorage.getItem("mealPlan") || "[]");
-  const items = new Set();
-
-  meals.forEach(m => {
-    Object.values(recipePacks).forEach(pack => {
-      if (pack[m]) pack[m].forEach(i => items.add(i));
-    });
-  });
-
-  items.forEach(i => {
-    const li = document.createElement("li");
-    li.textContent = i;
-    ul.appendChild(li);
-  });
-}
-
-/* ---------- RECEIPT DISPLAY ---------- */
-const receipt = localStorage.getItem("receipt");
-if (receipt) {
-  document.getElementById("receipt").textContent =
-    JSON.stringify(JSON.parse(receipt), null, 2);
-}
-
-/* ---------- LOAD SAVED PLAN ---------- */
-const saved = JSON.parse(localStorage.getItem("mealPlan") || "[]");
-document.querySelectorAll("textarea").forEach((t, i) => {
-  if (saved[i]) t.value = saved[i];
+function renderMeals() {
+mealList.innerHTML = '';
+const meals = JSON.parse(localStorage.getItem('meals') || '[]');
+meals.forEach(m => {
+const li = document.createElement('li');
+li.textContent = `🔥 ${m.calories} | P ${m.protein}g | C ${m.carbs}g | S ${m.sugar}g`;
+mealList.appendChild(li);
 });
-updateShoppingList();
-//
+}
+
+
+renderMeals();
