@@ -9,28 +9,28 @@
 
 <header>
   <h1>🍽 Meal Planner Pro</h1>
-  <p>Offline recipes · Smart planning · Simple payments</p>
+  <p>Offline meal planning · Simple upgrades · One-time purchase</p>
 </header>
 
 <section id="pricing">
-  <h2>Unlock Access</h2>
+  <h2>Upgrade Access</h2>
 
   <div class="card">
     <h3>Basic</h3>
-    <p>Meal Planner + Recipes</p>
-    <a href="PASTE_SQUARE_BASIC_LINK" class="buy">Buy $4.99</a>
+    <p>Planner + Starter Recipes</p>
+    <a href="https://square.link/u/EaNUJ0gy" class="buy">Buy $5</a>
   </div>
 
   <div class="card">
     <h3>Standard</h3>
-    <p>Planner + Recipes + Shopping List</p>
-    <a href="PASTE_SQUARE_STANDARD_LINK" class="buy">Buy $9.99</a>
+    <p>+ Shopping Lists + Family Recipes</p>
+    <a href="https://square.link/u/0cNYptZb" class="buy">Buy $10</a>
   </div>
 
   <div class="card premium">
     <h3>Premium</h3>
-    <p>All Features + License Unlock</p>
-    <a href="PASTE_SQUARE_PREMIUM_LINK" class="buy">Buy $19.99</a>
+    <p>All Recipes + Premium Features</p>
+    <a href="https://square.link/u/6Y9uWLVv" class="buy">Buy $20</a>
   </div>
 </section>
 
@@ -38,9 +38,11 @@
 
   <h2>📖 Recipes</h2>
   <select id="recipeSelect"></select>
-  <button onclick="addRecipe()">Add to Meal Plan</button>
+  <button onclick="addRecipe()">Add to Planner</button>
 
-  <h2>📋 Weekly Meal Planner</h2>
+  <p id="upgradePrompt" class="upgrade"></p>
+
+  <h2>📅 Weekly Planner</h2>
   <div class="planner">
     <textarea placeholder="Monday"></textarea>
     <textarea placeholder="Tuesday"></textarea>
@@ -55,6 +57,9 @@
 
   <h2>🛒 Shopping List</h2>
   <ul id="shoppingList"></ul>
+
+  <h2>🧾 Purchase Receipt</h2>
+  <pre id="receipt"></pre>
 
 </section>
 
