@@ -1,12 +1,12 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f6f6f6;
+  background: #f4f4f4;
   text-align: center;
   margin: 0;
 }
 
 header {
-  background: #27ae60;
+  background: #2ecc71;
   color: white;
   padding: 20px;
 }
@@ -55,7 +55,7 @@ textarea {
   height: 70px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.upgrade {
+  color: red;
+  font-weight: bold;
 }
