@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Meal Planner Pro</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<title>Recipe & Fitness Planner</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+
 <header>
-  <h1>🍽 Meal Planner Pro</h1>
-  <p>Offline meal planning · Simple upgrades · One-time purchase</p>
+<h1>Recipe & Fitness Planner</h1>
+<nav>
+<button onclick="showPage('login')">Login</button>
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('nutrition')">Nutrition</button>
+<button onclick="showPage('workouts')">Workouts</button>
+</nav>
 </header>
 
-<section id="pricing">
-  <h2>Upgrade Access</h2>
 
-  <div class="card">
-    <h3>Basic</h3>
-    <p>Planner + Starter Recipes</p>
-    <a href="https://square.link/u/EaNUJ0gy" class="buy">Buy $5</a>
-  </div>
+<main>
 
-  <div class="card">
-    <h3>Standard</h3>
-    <p>+ Shopping Lists + Family Recipes</p>
-    <a href="https://square.link/u/0cNYptZb" class="buy">Buy $10</a>
-  </div>
 
-  <div class="card premium">
-    <h3>Premium</h3>
-    <p>All Recipes + Premium Features</p>
-    <a href="https://square.link/u/6Y9uWLVv" class="buy">Buy $20</a>
-  </div>
+<section id="login" class="page">
+<h2>Account</h2>
+<input id="username" placeholder="Username" />
+<input id="password" type="password" placeholder="Password" />
+<button onclick="createAccount()">Create Account</button>
+<button onclick="login()">Login</button>
+<button class="bypass" onclick="bypassPaywall()">TEMPORARY ADMIN BYPASS</button>
 </section>
 
-<section id="app" class="hidden">
 
-  <h2>📖 Recipes</h2>
-  <select id="recipeSelect"></select>
-  <button onclick="addRecipe()">Add to Planner</button>
-
-  <p id="upgradePrompt" class="upgrade"></p>
-
-  <h2>📅 Weekly Planner</h2>
-  <div class="planner">
-    <textarea placeholder="Monday"></textarea>
-    <textarea placeholder="Tuesday"></textarea>
-    <textarea placeholder="Wednesday"></textarea>
-    <textarea placeholder="Thursday"></textarea>
-    <textarea placeholder="Friday"></textarea>
-    <textarea placeholder="Saturday"></textarea>
-    <textarea placeholder="Sunday"></textarea>
-  </div>
-
-  <button onclick="savePlan()">Save Plan</button>
-
-  <h2>🛒 Shopping List</h2>
-  <ul id="shoppingList"></ul>
-
-  <h2>🧾 Purchase Receipt</h2>
-  <pre id="receipt"></pre>
-
+<section id="dashboard" class="page hidden">
+<h2>Dashboard</h2>
+<p>Daily Goals</p>
+<input id="goalCalories" placeholder="Calories" />
+<input id="goalProtein" placeholder="Protein (g)" />
+<input id="goalCarbs" placeholder="Carbs (g)" />
+<input id="goalSugar" placeholder="Sugar (g)" />
+<button onclick="saveGoals()">Save Goals</button>
 </section>
+
+
+<section id="nutrition" class="page hidden">
+<h2>Nutrition Tracker</h2>
+<input id="calories" placeholder="Calories" />
+<input id="protein" placeholder="Protein (g)" />
+<input id="carbs" placeholder="Carbs (g)" />
+<input id="sugar" placeholder="Sugar (g)" />
+<button onclick="addMeal()">Add Meal</button>
+<ul id="mealList"></ul>
+</section>
+
+
+<section id="workouts" class="page hidden">
+<h2>Workout Suggestions</h2>
+<ul>
+<li>🏃 30 min cardio</li>
+<li>🏋️ Upper body strength</li>
+<li>🧘 Stretching & mobility</li>
+<li>🔥 HIIT (20 min)</li>
+</ul>
+</section>
+
+
+</main>
+
 
 <script src="app.js"></script>
 </body>
