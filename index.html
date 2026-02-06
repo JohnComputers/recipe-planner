@@ -1,95 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>FitPlanner Pro</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <title>FitPlanner Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-
 <header>
-<h1>🥗 FitPlanner Pro</h1>
-<nav>
-<button onclick="go('account')">Account</button>
-<button onclick="go('dashboard')">Dashboard</button>
-<button onclick="go('nutrition')">Nutrition</button>
-<button onclick="go('workouts')">Workouts</button>
-<button onclick="go('premium')">Upgrade</button>
-</nav>
+  <h1>🥗 FitPlanner Pro</h1>
+  <nav>
+    <button onclick="go('account')">Account</button>
+    <button onclick="go('dashboard')">Dashboard</button>
+    <button onclick="go('nutrition')">Nutrition</button>
+    <button onclick="go('workouts')">Workouts</button>
+    <button onclick="go('premium')">Upgrade</button>
+  </nav>
 </header>
-
 
 <main>
 
-
 <section id="account" class="page">
-<h2>Account</h2>
-<input id="user" placeholder="Username" />
-<input id="pass" type="password" placeholder="Password" />
-<button onclick="signup()">Create Account</button>
-<button onclick="signin()">Login</button>
+  <h2>Account</h2>
+  <input id="user" placeholder="Username" />
+  <input id="pass" type="password" placeholder="Password" />
+  <button onclick="signup()">Create Account</button>
+  <button onclick="signin()">Login</button>
 </section>
-
 
 <section id="premium" class="page hidden">
-<h2>Upgrade</h2>
-<div class="tier basic">
-<h3>Basic – $5</h3>
-<a href="https://square.link/u/EaNUJ0gy" target="_blank">Buy Basic</a>
-</div>
-<div class="tier standard">
-<h3>Standard – $10</h3>
-<a href="https://square.link/u/0cNYptZb" target="_blank">Buy Standard</a>
-</div>
-<div class="tier premium">
-<h3>Premium – $20</h3>
-<a href="https://square.link/u/6Y9uWLVv" target="_blank">Buy Premium</a>
-</div>
+  <h2>Upgrade</h2>
 
+  <div class="tier basic">
+    <h3>Basic – $5</h3>
+    <p>Nutrition tracking, goals, basic workouts</p>
+    <a href="https://square.link/u/EaNUJ0gy" target="_blank">Buy Basic</a>
+  </div>
 
-<h3>Enter License Code</h3>
-<input id="license" placeholder="XXXX-XXXX" />
-<button onclick="unlock()">Unlock</button>
+  <div class="tier standard">
+    <h3>Standard – $10</h3>
+    <p>Progress history, advanced workouts</p>
+    <a href="https://square.link/u/0cNYptZb" target="_blank">Buy Standard</a>
+  </div>
+
+  <div class="tier premium">
+    <h3>Premium – $20</h3>
+    <p>Meal templates, exports, future features</p>
+    <a href="https://square.link/u/6Y9uWLVv" target="_blank">Buy Premium</a>
+  </div>
+
+  <h3>Enter License Code</h3>
+  <input id="license" placeholder="XXXX-XXXX" />
+  <button onclick="unlock()">Unlock</button>
 </section>
-
 
 <section id="dashboard" class="page hidden">
-<h2>Dashboard</h2>
-<div id="tierBadge"></div>
-<div class="grid">
-<input id="gCalories" placeholder="Calories" />
-<input id="gProtein" placeholder="Protein (g)" />
-<input id="gCarbs" placeholder="Carbs (g)" />
-<input id="gSugar" placeholder="Sugar (g)" />
-</div>
-<button onclick="saveGoals()">Save Goals</button>
-<div id="progress"></div>
+  <h2>Dashboard</h2>
+  <div id="tierBadge"></div>
+  <div class="grid">
+    <input id="gCalories" placeholder="Calories" />
+    <input id="gProtein" placeholder="Protein (g)" />
+    <input id="gCarbs" placeholder="Carbs (g)" />
+    <input id="gSugar" placeholder="Sugar (g)" />
+  </div>
+  <button onclick="saveGoals()">Save Goals</button>
+  <div id="progress"></div>
 </section>
-
 
 <section id="nutrition" class="page hidden">
-<h2>Nutrition</h2>
-<div class="grid">
-<input id="cal" placeholder="Calories" />
-<input id="pro" placeholder="Protein" />
-<input id="carb" placeholder="Carbs" />
-<input id="sug" placeholder="Sugar" />
-</div>
-<button onclick="addMeal()">Add Meal</button>
-<ul id="meals"></ul>
+  <h2>Nutrition</h2>
+  <div class="grid">
+    <input id="cal" placeholder="Calories" />
+    <input id="pro" placeholder="Protein" />
+    <input id="carb" placeholder="Carbs" />
+    <input id="sug" placeholder="Sugar" />
+  </div>
+  <button onclick="addMeal()">Add Meal</button>
+  <ul id="meals"></ul>
 </section>
-
 
 <section id="workouts" class="page hidden">
-<h2>Workout Suggestions</h2>
-<ul id="workoutList"></ul>
+  <h2>Workout Suggestions</h2>
+  <ul id="workoutList"></ul>
 </section>
 
-
 </main>
-
 
 <footer>© FitPlanner Pro</footer>
 <script src="app.js"></script>
