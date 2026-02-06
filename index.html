@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <title>Recipe & Fitness Planner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 
 <header>
-<h1>Recipe & Fitness Planner</h1>
+<h1>🥗 FitPlanner Pro</h1>
 <nav>
-<button onclick="showPage('login')">Login</button>
-<button onclick="showPage('dashboard')">Dashboard</button>
-<button onclick="showPage('nutrition')">Nutrition</button>
-<button onclick="showPage('workouts')">Workouts</button>
+<button onclick="go('login')">Account</button>
+<button onclick="go('dashboard')">Dashboard</button>
+<button onclick="go('nutrition')">Nutrition</button>
+<button onclick="go('workouts')">Workouts</button>
 </nav>
 </header>
 
@@ -23,49 +24,53 @@
 
 
 <section id="login" class="page">
-<h2>Account</h2>
-<input id="username" placeholder="Username" />
-<input id="password" type="password" placeholder="Password" />
-<button onclick="createAccount()">Create Account</button>
-<button onclick="login()">Login</button>
-<button class="bypass" onclick="bypassPaywall()">TEMPORARY ADMIN BYPASS</button>
+<h2>Account Access</h2>
+<input id="user" placeholder="Username" />
+<input id="pass" type="password" placeholder="Password" />
+<button onclick="signup()">Create Account</button>
+<button onclick="signin()">Login</button>
+<button class="bypass" onclick="bypass()">Temporary Admin Bypass</button>
 </section>
 
 
 <section id="dashboard" class="page hidden">
-<h2>Dashboard</h2>
-<p>Daily Goals</p>
-<input id="goalCalories" placeholder="Calories" />
-<input id="goalProtein" placeholder="Protein (g)" />
-<input id="goalCarbs" placeholder="Carbs (g)" />
-<input id="goalSugar" placeholder="Sugar (g)" />
+<h2>Daily Goals</h2>
+<div class="grid">
+<input id="gCalories" placeholder="Calories" />
+<input id="gProtein" placeholder="Protein (g)" />
+<input id="gCarbs" placeholder="Carbs (g)" />
+<input id="gSugar" placeholder="Sugar (g)" />
+</div>
 <button onclick="saveGoals()">Save Goals</button>
+<div id="progress"></div>
 </section>
 
 
 <section id="nutrition" class="page hidden">
 <h2>Nutrition Tracker</h2>
-<input id="calories" placeholder="Calories" />
-<input id="protein" placeholder="Protein (g)" />
-<input id="carbs" placeholder="Carbs (g)" />
-<input id="sugar" placeholder="Sugar (g)" />
+<div class="grid">
+<input id="cal" placeholder="Calories" />
+<input id="pro" placeholder="Protein (g)" />
+<input id="carb" placeholder="Carbs (g)" />
+<input id="sug" placeholder="Sugar (g)" />
+</div>
 <button onclick="addMeal()">Add Meal</button>
-<ul id="mealList"></ul>
+<ul id="meals"></ul>
 </section>
 
 
 <section id="workouts" class="page hidden">
 <h2>Workout Suggestions</h2>
-<ul>
-<li>🏃 30 min cardio</li>
-<li>🏋️ Upper body strength</li>
-<li>🧘 Stretching & mobility</li>
-<li>🔥 HIIT (20 min)</li>
-</ul>
+<ul id="workoutList"></ul>
 </section>
 
 
 </main>
+
+
+<footer>
+<p>© FitPlanner Pro</p>
+</footer>
 
 
 <script src="app.js"></script>
