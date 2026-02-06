@@ -1,131 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>FitPlanner Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPlanner Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">🥗 <strong>FitPlanner Pro</strong></div>
-  <nav>
-    <button onclick="go('account')">Account</button>
-    <button onclick="go('dashboard')">Dashboard</button>
-    <button onclick="go('nutrition')">Nutrition</button>
-    <button onclick="go('workouts')">Workouts</button>
-    <button onclick="go('premium')">Upgrade</button>
-  </nav>
-</header>
-
-<main>
-
-<section id="account" class="page">
-  <h2>Account</h2>
-  <p class="muted">Local demo accounts (GitHub Pages safe)</p>
-  <input id="user" placeholder="Username" />
-  <input id="pass" type="password" placeholder="Password" />
-  <div class="row">
-    <button onclick="signup()">Create Account</button>
-    <button onclick="signin()">Login</button>
-  </div>
-</section>
-
-<section id="premium" class="page hidden">
-  <h2>Upgrade Plan</h2>
-
-  <div class="tiers">
-    <div class="tier basic">
-      <h3>Basic – $5</h3>
-      <ul>
-        <li>Nutrition tracking</li>
-        <li>Daily goals</li>
-      </ul>
-      <a href="https://square.link/u/EaNUJ0gy" target="_blank">Buy Basic</a>
+    <div id="auth-view" class="container">
+        <h1>FitPlanner Pro</h1>
+        <div class="card">
+            <h2>Welcome</h2>
+            <p>Track your fitness journey locally. No cloud, total privacy.</p>
+            <form id="login-form">
+                <input type="email" id="email-input" placeholder="Enter Email (for local session)" required>
+                <button type="submit" class="btn-primary">Start Planning</button>
+            </form>
+            <button id="guest-btn" class="btn-secondary">Continue as Guest</button>
+        </div>
     </div>
 
-    <div class="tier standard">
-      <h3>Standard – $10</h3>
-      <ul>
-        <li>Everything in Basic</li>
-        <li>Progress history</li>
-        <li>Smart workouts</li>
-      </ul>
-      <a href="https://square.link/u/0cNYptZb" target="_blank">Buy Standard</a>
+    <div id="app-view" class="hidden">
+        <nav>
+            <div class="logo">FitPlanner <span id="tier-badge" class="badge">FREE</span></div>
+            <div class="nav-links">
+                <button onclick="app.showSection('tracker')">Tracker</button>
+                <button onclick="app.showSection('goals')">Goals</button>
+                <button onclick="app.showSection('workouts')">Workouts</button>
+                <button onclick="app.showSection('upgrade')">Upgrade</button>
+                <button onclick="auth.logout()" class="btn-logout">Logout</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <section id="tracker-section">
+                <h2>Daily Nutrition</h2>
+                <div class="stats-grid" id="stats-display">
+                    </div>
+                
+                <div class="card">
+                    <h3>Add Entry</h3>
+                    <form id="entry-form">
+                        <input type="number" id="cal-in" placeholder="Calories" required>
+                        <input type="number" id="prot-in" placeholder="Protein (g)" required>
+                        <input type="number" id="carb-in" placeholder="Carbs (g)" required>
+                        <input type="number" id="sugar-in" placeholder="Sugar (g)" required>
+                        <button type="submit" class="btn-primary">Add Log</button>
+                    </form>
+                    <button onclick="app.clearDaily()" class="btn-danger">Reset Day</button>
+                </div>
+            </section>
+
+            <section id="goals-section" class="hidden">
+                <h2>Nutrition Goals</h2>
+                <div id="goals-locked" class="locked-overlay hidden">
+                    <i class="fas fa-lock"></i>
+                    <h3>Pro Feature</h3>
+                    <p>Unlock to set custom macro targets.</p>
+                    <button onclick="app.showSection('upgrade')" class="btn-primary">Upgrade</button>
+                </div>
+                <div id="goals-content">
+                    <div class="card">
+                        <h3>Set Targets</h3>
+                        <form id="goals-form">
+                            <label>Target Calories</label>
+                            <input type="number" id="target-cal">
+                            <label>Target Protein (g)</label>
+                            <input type="number" id="target-prot">
+                            <button type="submit" class="btn-primary">Save Goals</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="workouts-section" class="hidden">
+                <h2>Workout Plans</h2>
+                <div id="workouts-locked" class="locked-overlay hidden">
+                    <i class="fas fa-lock"></i>
+                    <h3>Elite Feature</h3>
+                    <p>Unlock Elite to view structured workout plans.</p>
+                    <button onclick="app.showSection('upgrade')" class="btn-primary">Upgrade</button>
+                </div>
+                <div id="workouts-content" class="plans-grid">
+                    <div class="card plan-card">
+                        <h3>Push Day</h3>
+                        <ul>
+                            <li>Bench Press: 3x10</li>
+                            <li>Overhead Press: 3x12</li>
+                            <li>Tricep Dips: 3x15</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <h3>Pull Day</h3>
+                        <ul>
+                            <li>Deadlifts: 3x8</li>
+                            <li>Pull Ups: 3x10</li>
+                            <li>Bicep Curls: 3x12</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <h3>Leg Day</h3>
+                        <ul>
+                            <li>Squats: 3x10</li>
+                            <li>Lunges: 3x12</li>
+                            <li>Calf Raises: 4x20</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="upgrade-section" class="hidden">
+                <h2>Upgrade Plan</h2>
+                <div class="pricing-grid">
+                    <div class="card price-card">
+                        <h3>Standard (PRO)</h3>
+                        <p class="price">$10</p>
+                        <ul>
+                            <li>Everything in Free</li>
+                            <li>Set Nutrition Goals</li>
+                        </ul>
+                        <a href="https://square.link/u/0cNYptZb" target="_blank" class="btn-primary">Buy Pro</a>
+                        <small>After payment, you will be redirected to unlock.</small>
+                    </div>
+
+                    <div class="card price-card">
+                        <h3>Premium (ELITE)</h3>
+                        <p class="price">$20</p>
+                        <ul>
+                            <li>Everything in Pro</li>
+                            <li>Workout Plans</li>
+                            <li>Priority Features</li>
+                        </ul>
+                        <a href="https://square.link/u/6Y9uWLVv" target="_blank" class="btn-primary">Buy Elite</a>
+                        <small>After payment, you will be redirected to unlock.</small>
+                    </div>
+
+                     <div class="card price-card">
+                        <h3>Support Us</h3>
+                        <p class="price">$5</p>
+                        <p>Love the app? Buy us a coffee.</p>
+                        <a href="https://square.link/u/EaNUJ0gy" target="_blank" class="btn-secondary">Donate $5</a>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 
-    <div class="tier premium">
-      <h3>Premium – $20</h3>
-      <ul>
-        <li>Everything in Standard</li>
-        <li>Meal templates</li>
-        <li>Data export</li>
-      </ul>
-      <a href="https://square.link/u/6Y9uWLVv" target="_blank">Buy Premium</a>
-    </div>
-  </div>
-
-  <h3>Enter License Code</h3>
-  <input id="license" placeholder="PREMIUM-XXXXXX-123" />
-  <button onclick="unlock()">Unlock</button>
-</section>
-
-<section id="dashboard" class="page hidden">
-  <h2>Dashboard</h2>
-  <div id="tierBadge"></div>
-
-  <h3>Daily Goals</h3>
-  <div class="grid">
-    <input id="gCalories" placeholder="Calories" />
-    <input id="gProtein" placeholder="Protein (g)" />
-    <input id="gCarbs" placeholder="Carbs (g)" />
-    <input id="gSugar" placeholder="Sugar (g)" />
-  </div>
-  <button onclick="saveGoals()">Save Goals</button>
-
-  <h3>Today’s Progress</h3>
-  <div id="progress"></div>
-</section>
-
-<section id="nutrition" class="page hidden">
-  <h2>Nutrition Log</h2>
-  <div class="grid">
-    <input id="cal" placeholder="Calories" />
-    <input id="pro" placeholder="Protein" />
-    <input id="carb" placeholder="Carbs" />
-    <input id="sug" placeholder="Sugar" />
-  </div>
-  <button onclick="addMeal()">Add Meal</button>
-  <ul id="meals"></ul>
-</section>
-
-<section id="workouts" class="page hidden">
-  <h2>Workout Suggestions</h2>
-  <ul id="workoutList"></ul>
-</section>
-
-</main>
-
-<footer>© 2026 FitPlanner Pro</footer>
-
-<!-- Admin Modal -->
-<div id="adminModal" class="modal hidden">
-  <div class="modal-box">
-    <h3>Admin Tools</h3>
-    <p>Generate license codes (offline)</p>
-    <select id="adminTier">
-      <option value="BASIC">Basic</option>
-      <option value="STANDARD">Standard</option>
-      <option value="PREMIUM">Premium</option>
-    </select>
-    <button onclick="generateAdminLicense()">Generate</button>
-    <pre id="adminOutput"></pre>
-    <button class="secondary" onclick="closeAdmin()">Close</button>
-  </div>
-</div>
-
-<script src="app.js"></script>
-<script src="admin.js"></script>
+    <script src="auth.js"></script>
+    <script src="payments.js"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
 </body>
 </html>
