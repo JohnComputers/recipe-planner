@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Recipe & Fitness Planner</title>
+<title>FitPlanner Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -12,10 +12,11 @@
 <header>
 <h1>🥗 FitPlanner Pro</h1>
 <nav>
-<button onclick="go('login')">Account</button>
+<button onclick="go('account')">Account</button>
 <button onclick="go('dashboard')">Dashboard</button>
 <button onclick="go('nutrition')">Nutrition</button>
 <button onclick="go('workouts')">Workouts</button>
+<button onclick="go('premium')">Upgrade</button>
 </nav>
 </header>
 
@@ -23,18 +24,40 @@
 <main>
 
 
-<section id="login" class="page">
-<h2>Account Access</h2>
+<section id="account" class="page">
+<h2>Account</h2>
 <input id="user" placeholder="Username" />
 <input id="pass" type="password" placeholder="Password" />
 <button onclick="signup()">Create Account</button>
 <button onclick="signin()">Login</button>
-<button class="bypass" onclick="bypass()">Temporary Admin Bypass</button>
+</section>
+
+
+<section id="premium" class="page hidden">
+<h2>Upgrade</h2>
+<div class="tier basic">
+<h3>Basic – $5</h3>
+<a href="https://square.link/u/EaNUJ0gy" target="_blank">Buy Basic</a>
+</div>
+<div class="tier standard">
+<h3>Standard – $10</h3>
+<a href="https://square.link/u/0cNYptZb" target="_blank">Buy Standard</a>
+</div>
+<div class="tier premium">
+<h3>Premium – $20</h3>
+<a href="https://square.link/u/6Y9uWLVv" target="_blank">Buy Premium</a>
+</div>
+
+
+<h3>Enter License Code</h3>
+<input id="license" placeholder="XXXX-XXXX" />
+<button onclick="unlock()">Unlock</button>
 </section>
 
 
 <section id="dashboard" class="page hidden">
-<h2>Daily Goals</h2>
+<h2>Dashboard</h2>
+<div id="tierBadge"></div>
 <div class="grid">
 <input id="gCalories" placeholder="Calories" />
 <input id="gProtein" placeholder="Protein (g)" />
@@ -47,12 +70,12 @@
 
 
 <section id="nutrition" class="page hidden">
-<h2>Nutrition Tracker</h2>
+<h2>Nutrition</h2>
 <div class="grid">
 <input id="cal" placeholder="Calories" />
-<input id="pro" placeholder="Protein (g)" />
-<input id="carb" placeholder="Carbs (g)" />
-<input id="sug" placeholder="Sugar (g)" />
+<input id="pro" placeholder="Protein" />
+<input id="carb" placeholder="Carbs" />
+<input id="sug" placeholder="Sugar" />
 </div>
 <button onclick="addMeal()">Add Meal</button>
 <ul id="meals"></ul>
@@ -68,11 +91,7 @@
 </main>
 
 
-<footer>
-<p>© FitPlanner Pro</p>
-</footer>
-
-
+<footer>© FitPlanner Pro</footer>
 <script src="app.js"></script>
 </body>
 </html>
