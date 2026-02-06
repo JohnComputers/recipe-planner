@@ -1,9 +1,9 @@
 let unlocked = false;
 
 
-function showPage(id) {
+function go(id) {
 if (!unlocked && id !== 'login') {
-alert('Please purchase or use admin bypass');
+alert('Access locked. Purchase required.');
 return;
 }
 document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
@@ -11,65 +11,90 @@ document.getElementById(id).classList.remove('hidden');
 }
 
 
-function createAccount() {
-const user = username.value;
-const pass = password.value;
-localStorage.setItem('account', JSON.stringify({ user, pass }));
+function signup() {
+localStorage.setItem('account', JSON.stringify({ u: user.value, p: pass.value }));
 alert('Account created');
 }
 
 
-function login() {
-const acc = JSON.parse(localStorage.getItem('account'));
-if (!acc) return alert('No account');
-if (acc.user === username.value && acc.pass === password.value) {
+function signin() {
+const a = JSON.parse(localStorage.getItem('account'));
+if (a && a.u === user.value && a.p === pass.value) {
 unlocked = true;
-showPage('dashboard');
-} else alert('Wrong credentials');
+go('dashboard');
+} else alert('Invalid login');
 }
 
 
-function bypassPaywall() {
+function bypass() {
 unlocked = true;
-showPage('dashboard');
+go('dashboard');
 }
 
 
 function saveGoals() {
-const goals = {
-calories: goalCalories.value,
-protein: goalProtein.value,
-carbs: goalCarbs.value,
-sugar: goalSugar.value
+const g = {
+cal: +gCalories.value,
+pro: +gProtein.value,
+carb: +gCarbs.value,
+sug: +gSugar.value
 };
-localStorage.setItem('goals', JSON.stringify(goals));
-alert('Goals saved');
+localStorage.setItem('goals', JSON.stringify(g));
+updateProgress();
 }
 
 
 function addMeal() {
-const meal = {
-calories: calories.value,
-protein: protein.value,
-carbs: carbs.value,
-sugar: sugar.value
+const m = {
+cal:+cal.value, pro:+pro.value, carb:+carb.value, sug:+sug.value
 };
-const meals = JSON.parse(localStorage.getItem('meals') || '[]');
-meals.push(meal);
-localStorage.setItem('meals', JSON.stringify(meals));
+const arr = JSON.parse(localStorage.getItem('meals')||'[]');
+arr.push(m);
+localStorage.setItem('meals', JSON.stringify(arr));
 renderMeals();
+updateProgress();
 }
 
 
 function renderMeals() {
-mealList.innerHTML = '';
-const meals = JSON.parse(localStorage.getItem('meals') || '[]');
-meals.forEach(m => {
+meals.innerHTML = '';
+const arr = JSON.parse(localStorage.getItem('meals')||'[]');
+arr.forEach(m => {
 const li = document.createElement('li');
-li.textContent = `🔥 ${m.calories} | P ${m.protein}g | C ${m.carbs}g | S ${m.sugar}g`;
-mealList.appendChild(li);
+li.textContent = `🔥 ${m.cal} | P ${m.pro}g | C ${m.carb}g | S ${m.sug}g`;
+meals.appendChild(li);
 });
 }
 
 
+function updateProgress() {
+const g = JSON.parse(localStorage.getItem('goals'));
+if (!g) return;
+const arr = JSON.parse(localStorage.getItem('meals')||'[]');
+const t = arr.reduce((a,m)=>({
+cal:a.cal+m.cal, pro:a.pro+m.pro, carb:a.carb+m.carb, sug:a.sug+m.sug
+}),{cal:0,pro:0,carb:0,sug:0});
+
+
+progress.innerHTML = `
+<p>Calories: ${t.cal}/${g.cal}</p>
+<p>Protein: ${t.pro}/${g.pro}g</p>
+<p>Carbs: ${t.carb}/${g.carb}g</p>
+<p>Sugar: ${t.sug}/${g.sug}g</p>`;
+
+
+renderWorkouts(t,g);
+}
+
+
+function renderWorkouts(t,g) {
+workoutList.innerHTML='';
+if (t.cal > g.cal) workoutList.innerHTML += '<li>🔥 Cardio burn session</li>';
+if (t.pro < g.pro) workoutList.innerHTML += '<li>🏋️ Strength training</li>';
+if (t.carb > g.carb) workoutList.innerHTML += '<li>🚶 Light activity walk</li>';
+workoutList.innerHTML += '<li>🧘 Stretch & mobility</li>';
+}
+
+
 renderMeals();
+updateProgress();
