@@ -1,194 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <title>FitPlanner Pro</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">🥗 FitPlanner Pro</div>
-    <nav class="nav">
-      <button onclick="go('account')">Account</button>
-      <button onclick="go('dashboard')">Dashboard</button>
-      <button onclick="go('nutrition')">Nutrition</button>
-      <button onclick="go('workouts')">Workouts</button>
-      <button onclick="go('history')">History</button>
-      <button onclick="go('templates')">Templates</button>
-      <button onclick="go('premium')">Upgrade</button>
-    </nav>
-  </header>
 
-  <main class="container">
+<header class="topbar">
+  <div class="logo">🥗 <strong>FitPlanner Pro</strong></div>
+  <nav>
+    <button onclick="go('account')">Account</button>
+    <button onclick="go('dashboard')">Dashboard</button>
+    <button onclick="go('nutrition')">Nutrition</button>
+    <button onclick="go('workouts')">Workouts</button>
+    <button onclick="go('premium')">Upgrade</button>
+  </nav>
+</header>
 
-    <!-- ACCOUNT -->
-    <section id="account" class="page">
-      <h2>Account</h2>
-      <div class="card">
-        <label>Username</label>
-        <input id="user" autocomplete="username" />
-        <label>Password</label>
-        <input id="pass" type="password" autocomplete="current-password" />
-        <div class="row">
-          <button onclick="signup()">Create Account</button>
-          <button onclick="signin()">Login</button>
-          <button id="devBypassBtn" class="ghost" onclick="devBypass()" title="Dev only">Dev Bypass</button>
-        </div>
-        <p class="muted">Accounts are local-only (browser). For production you can connect a backend later.</p>
-      </div>
-    </section>
+<main>
 
-    <!-- PREMIUM / UPGRADE -->
-    <section id="premium" class="page hidden">
-      <h2>Upgrade / Unlock</h2>
-      <div class="card tiers">
-        <div class="tier basic">
-          <h3>Basic — $5</h3>
-          <p>Nutrition + goals + basic workouts</p>
-          <a class="btn" href="https://square.link/u/EaNUJ0gy" target="_blank" rel="noopener">Buy Basic ($5)</a>
-        </div>
-        <div class="tier standard">
-          <h3>Standard — $10</h3>
-          <p>Progress history + better workout logic</p>
-          <a class="btn" href="https://square.link/u/0cNYptZb" target="_blank" rel="noopener">Buy Standard ($10)</a>
-        </div>
-        <div class="tier premium">
-          <h3>Premium — $20</h3>
-          <p>Meal templates, CSV export, all features</p>
-          <a class="btn" href="https://square.link/u/6Y9uWLVv" target="_blank" rel="noopener">Buy Premium ($20)</a>
-        </div>
-      </div>
+<section id="account" class="page">
+  <h2>Account</h2>
+  <p class="muted">Local demo accounts (GitHub Pages safe)</p>
+  <input id="user" placeholder="Username" />
+  <input id="pass" type="password" placeholder="Password" />
+  <div class="row">
+    <button onclick="signup()">Create Account</button>
+    <button onclick="signin()">Login</button>
+  </div>
+</section>
 
-      <div class="card">
-        <h4>After purchase</h4>
-        <ol>
-          <li>Square will complete the purchase in a new tab.</li>
-          <li>After payment you will receive a license code from the seller by email (or you can be redirected to this site with <code>?license=basic</code> etc.).</li>
-          <li>Paste the license code below to unlock features in this browser.</li>
-        </ol>
+<section id="premium" class="page hidden">
+  <h2>Upgrade Plan</h2>
 
-        <label>License code</label>
-        <input id="license" placeholder="XXXX-YYYY-ZZZZ" />
-        <div class="row">
-          <button onclick="unlock()">Unlock</button>
-          <button class="ghost" onclick="autoUnlockFromURL()">Auto-unlock (if redirected)</button>
-        </div>
+  <div class="tiers">
+    <div class="tier basic">
+      <h3>Basic – $5</h3>
+      <ul>
+        <li>Nutrition tracking</li>
+        <li>Daily goals</li>
+      </ul>
+      <a href="https://square.link/u/EaNUJ0gy" target="_blank">Buy Basic</a>
+    </div>
 
-        <p class="muted">If you want, after purchase manually send customers a code you generate (see admin notes in Settings).</p>
-      </div>
-    </section>
+    <div class="tier standard">
+      <h3>Standard – $10</h3>
+      <ul>
+        <li>Everything in Basic</li>
+        <li>Progress history</li>
+        <li>Smart workouts</li>
+      </ul>
+      <a href="https://square.link/u/0cNYptZb" target="_blank">Buy Standard</a>
+    </div>
 
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="page hidden">
-      <h2>Dashboard</h2>
-      <div class="card">
-        <div class="row space">
-          <div id="tierBadge" class="badge">Plan: FREE</div>
-          <div>
-            <button onclick="exportCSV()" id="exportBtn" class="ghost">Export CSV (Premium)</button>
-          </div>
-        </div>
-
-        <h4>Daily Goals</h4>
-        <div class="grid">
-          <label>Calories<input id="gCalories" type="number" /></label>
-          <label>Protein (g)<input id="gProtein" type="number" /></label>
-          <label>Carbs (g)<input id="gCarbs" type="number" /></label>
-          <label>Sugar (g)<input id="gSugar" type="number" /></label>
-        </div>
-        <div class="row">
-          <button onclick="saveGoals()">Save goals</button>
-          <button class="ghost" onclick="clearGoals()">Clear</button>
-        </div>
-
-        <div id="progressCard" class="card small">
-          <h4>Today's Progress</h4>
-          <div id="progressBars"></div>
-        </div>
-
-        <div id="chartCard" class="card small">
-          <h4>Last 7 days (calories)</h4>
-          <canvas id="historyChart" width="720" height="140"></canvas>
-        </div>
-      </div>
-    </section>
-
-    <!-- NUTRITION -->
-    <section id="nutrition" class="page hidden">
-      <h2>Log Nutrition</h2>
-      <div class="card">
-        <div class="grid">
-          <label>Calories<input id="cal" type="number" /></label>
-          <label>Protein (g)<input id="pro" type="number" /></label>
-          <label>Carbs (g)<input id="carb" type="number" /></label>
-          <label>Sugar (g)<input id="sug" type="number" /></label>
-        </div>
-
-        <div class="row">
-          <button onclick="addMeal()">Add Meal</button>
-          <button class="ghost" onclick="quickAddTemplate()">Use Template (Premium)</button>
-        </div>
-
-        <h4>Today's entries</h4>
-        <ul id="meals"></ul>
-      </div>
-    </section>
-
-    <!-- WORKOUTS -->
-    <section id="workouts" class="page hidden">
-      <h2>Workout Suggestions</h2>
-      <div class="card">
-        <div id="workoutList"></div>
-        <h4>Custom suggestion engine</h4>
-        <p class="muted">Recommendations driven by goals vs intake. Premium gives more refined suggestions.</p>
-      </div>
-    </section>
-
-    <!-- HISTORY -->
-    <section id="history" class="page hidden">
-      <h2>History & Insights</h2>
-      <div class="card">
-        <h4>All entries</h4>
-        <div class="row">
-          <button onclick="clearMeals()" class="ghost">Clear all</button>
-          <button onclick="downloadJSON()" class="ghost">Download backup (JSON)</button>
-        </div>
-        <ul id="historyList"></ul>
-      </div>
-    </section>
-
-    <!-- TEMPLATES -->
-    <section id="templates" class="page hidden">
-      <h2>Meal Templates (Premium)</h2>
-      <div class="card">
-        <p class="muted">Prebuilt meal templates; tap to populate nutrition fields.</p>
-        <div id="templateList" class="grid"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">© FitPlanner Pro — static MVP</footer>
-
-  <!-- small modal for admin instructions -->
-  <div id="adminModal" class="modal hidden">
-    <div class="modal-inner">
-      <h3>Admin: Generate License Codes</h3>
-      <p>Use the simple offline generator method below to create safe-ish codes to email buyers:</p>
-      <ol>
-        <li>Choose tier: <code>BASIC</code>, <code>STANDARD</code>, <code>PREMIUM</code></li>
-        <li>Pick a short random token (6 chars) → e.g. <code>5G7K2Q</code></li>
-        <li>Compute checksum = sum of char codes of token + tierName length, mod 997.</li>
-        <li>Code format: <code>TIER-TOKEN-CHECK</code> e.g. <code>BASIC-5G7K2Q-428</code></li>
-      </ol>
-      <p class="muted">Client verifies checksum; this prevents random guess codes. It's not foolproof but much better than static obvious codes.</p>
-      <div class="row">
-        <button onclick="closeAdmin()">Close</button>
-      </div>
+    <div class="tier premium">
+      <h3>Premium – $20</h3>
+      <ul>
+        <li>Everything in Standard</li>
+        <li>Meal templates</li>
+        <li>Data export</li>
+      </ul>
+      <a href="https://square.link/u/6Y9uWLVv" target="_blank">Buy Premium</a>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <h3>Enter License Code</h3>
+  <input id="license" placeholder="PREMIUM-XXXXXX-123" />
+  <button onclick="unlock()">Unlock</button>
+</section>
+
+<section id="dashboard" class="page hidden">
+  <h2>Dashboard</h2>
+  <div id="tierBadge"></div>
+
+  <h3>Daily Goals</h3>
+  <div class="grid">
+    <input id="gCalories" placeholder="Calories" />
+    <input id="gProtein" placeholder="Protein (g)" />
+    <input id="gCarbs" placeholder="Carbs (g)" />
+    <input id="gSugar" placeholder="Sugar (g)" />
+  </div>
+  <button onclick="saveGoals()">Save Goals</button>
+
+  <h3>Today’s Progress</h3>
+  <div id="progress"></div>
+</section>
+
+<section id="nutrition" class="page hidden">
+  <h2>Nutrition Log</h2>
+  <div class="grid">
+    <input id="cal" placeholder="Calories" />
+    <input id="pro" placeholder="Protein" />
+    <input id="carb" placeholder="Carbs" />
+    <input id="sug" placeholder="Sugar" />
+  </div>
+  <button onclick="addMeal()">Add Meal</button>
+  <ul id="meals"></ul>
+</section>
+
+<section id="workouts" class="page hidden">
+  <h2>Workout Suggestions</h2>
+  <ul id="workoutList"></ul>
+</section>
+
+</main>
+
+<footer>© 2026 FitPlanner Pro</footer>
+
+<!-- Admin Modal -->
+<div id="adminModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Admin Tools</h3>
+    <p>Generate license codes (offline)</p>
+    <select id="adminTier">
+      <option value="BASIC">Basic</option>
+      <option value="STANDARD">Standard</option>
+      <option value="PREMIUM">Premium</option>
+    </select>
+    <button onclick="generateAdminLicense()">Generate</button>
+    <pre id="adminOutput"></pre>
+    <button class="secondary" onclick="closeAdmin()">Close</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
